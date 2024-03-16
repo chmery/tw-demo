@@ -10,7 +10,7 @@ export const Root = () => {
         Explore, Discover, and Save with Our Dynamic Search and Add App Designed
         to Enhance Your Favorites Collection.
       </p>
-      <button className="border-solid border border-grey-light hover:bg-hover rounded-md w-[300px] p-2">
+      <button className="border-default rounded-md hover:bg-hover w-[300px] p-2">
         Start Searching
       </button>
     </div>

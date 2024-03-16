@@ -3,3 +3,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .border-default {
+    @apply border-solid border border-grey-light;
+  }
+}
