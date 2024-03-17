@@ -1,3 +1,5 @@
+import { Button } from "../components/Button";
+
 export const Root = () => {
   return (
     <div className="text-center">
@@ -10,9 +12,7 @@ export const Root = () => {
         Explore, Discover, and Save with Our Dynamic Search and Add App Designed
         to Enhance Your Favorites Collection.
       </p>
-      <button className="border-default rounded-md hover:bg-hover w-[300px] p-2">
-        Start Searching
-      </button>
+      <Button width="300px">Start Searching</Button>
     </div>
   );
 };
