@@ -12,7 +12,7 @@ export const Root = () => {
         Explore, Discover, and Save with Our Dynamic Search and Add App Designed
         to Enhance Your Favorites Collection.
       </p>
-      <Button width="300px">Start Searching</Button>
+      <Button className="w-[300px]">Start Searching</Button>
     </div>
   );
 };
