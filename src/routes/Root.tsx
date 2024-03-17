@@ -1,6 +1,6 @@
 export const Root = () => {
   return (
-    <div className="text-center">
+    <div className="text-center flex flex-col items-center">
       <h1 className="font-extrabold text-5xl mx-auto">
         Welcome to
         <br />
