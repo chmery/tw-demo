@@ -1,8 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 
 const NavItem = ({ text }: { text: string }) => {
-  const isActive =
-    useLocation().pathname.replace("/", "") === text.toLowerCase();
+  const { pathname } = useLocation();
+  const isActive = pathname.replace("/", "") === text.toLowerCase();
 
   const activeClasses = "bg-grey-light w-3/5";
   const notActiveClasses = "w-2/5";
