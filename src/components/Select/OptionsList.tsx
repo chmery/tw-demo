@@ -1,14 +1,14 @@
 import { IoCheckmarkSharp } from "react-icons/io5";
 
 interface Props {
-  options: string[] | number[];
-  onSelect: (option: string | number) => void;
-  selected: string | number;
+  options: string[];
+  onSelect: (option: string) => void;
+  selected: string;
 }
 
 export const OptionsList = ({ options, onSelect, selected }: Props) => {
   return (
-    <div className="border-default rounded-md p-1 absolute top-11 bg-[#ffff]">
+    <div className="border-default rounded-md p-1 absolute top-12 bg-[#ffff]">
       {options.map((option) => {
         const isOptionSelected = option === selected;
 

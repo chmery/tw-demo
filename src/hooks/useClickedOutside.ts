@@ -11,9 +11,9 @@ export const useClickedOutside = <T extends HTMLElement>(
       callback();
     };
 
-    document.addEventListener("click", clickHandler);
+    document.addEventListener("click", clickHandler, true);
     return () => {
-      document.removeEventListener("click", clickHandler);
+      document.removeEventListener("click", clickHandler, true);
     };
   }, [callback]);
 

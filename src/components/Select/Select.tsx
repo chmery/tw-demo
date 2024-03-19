@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { IoChevronDownSharp } from "react-icons/io5";
+import { IoChevronDownSharp, IoChevronUpSharp } from "react-icons/io5";
 import { OptionsList } from "./OptionsList";
 import { useClickedOutside } from "../../hooks/useClickedOutside";
 
-interface SelectProps {
-  options: string[] | number[];
-  onSelect: (option: string | number) => void;
+interface Props {
+  options: string[];
+  name: string;
+  onSelect: (option: string) => void;
 }
 
-export const Select = ({ options, onSelect }: SelectProps) => {
+export const Select = ({ options, onSelect, name }: Props) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [selected, setSelected] = useState(options[0]);
+  const [selected, setSelected] = useState("");
 
-  const selectHandler = (option: number | string) => {
+  const selectHandler = (option: string) => {
     setSelected(option);
     setIsExpanded(false);
     onSelect(option);
@@ -28,9 +29,10 @@ export const Select = ({ options, onSelect }: SelectProps) => {
       onClick={() => setIsExpanded(!isExpanded)}
       ref={selectRef}
     >
-      <div className="w-16 py-2 gap-1 flex items-center justify-center border-default hover:bg-hover rounded-md cursor-pointer">
-        <span>{selected}</span>
-        <IoChevronDownSharp className="text-grey-dark" />
+      <div className="px-4 py-2 gap-1 flex items-center justify-center border-default hover:bg-hover rounded-md cursor-pointer">
+        <span className="text-grey-dark">{selected ? selected : name}</span>
+        {isExpanded && <IoChevronUpSharp className="text-grey-dark" />}
+        {!isExpanded && <IoChevronDownSharp className="text-grey-dark" />}
       </div>
       {isExpanded && (
         <OptionsList
