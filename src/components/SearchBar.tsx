@@ -27,7 +27,7 @@ export const SearchBar = ({ onSearch }: Props) => {
         onChange={(e) => setInputValue(e.target.value)}
       />
       {!isEmpty && (
-        <Button onClick={searchHandler} className="absolute right-2">
+        <Button onClick={searchHandler} className="absolute right-2 ">
           <LuSearch className="text-grey-dark text-2xl" />
         </Button>
       )}

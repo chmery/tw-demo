@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "../components/Button";
 
 export const Root = () => {
@@ -12,7 +13,9 @@ export const Root = () => {
         Explore, Discover, and Save with Our Dynamic Search and Add App Designed
         to Enhance Your Favorites Collection.
       </p>
-      <Button className="w-[300px]">Start Searching</Button>
+      <Button className="w-[300px]">
+        <Link to="search">Start Searching</Link>
+      </Button>
     </div>
   );
 };

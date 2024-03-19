@@ -4,11 +4,22 @@ import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Wrapper } from "./components/Wrapper.tsx";
 import { Root } from "./routes/Root.tsx";
+import { Layout } from "./components/Layout.tsx";
+import { Search } from "./routes/Search.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+  },
+  {
+    element: <Layout />,
+    children: [
+      {
+        path: "/search",
+        element: <Search />,
+      },
+    ],
   },
 ]);
 
