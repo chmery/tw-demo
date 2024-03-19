@@ -22,7 +22,7 @@ const Item = ({ item, onAdd }: ItemProps) => {
   const { id, title, thumbnailUrl } = item;
 
   return (
-    <div className="flex gap-x-4 items-center border-solid border-b border-grey-light py-6 px-4 last">
+    <div className="flex gap-x-4 items-center border-solid border-b border-grey-light py-6 last:border-b-0">
       <img className="w-20 h-20 rounded-lg" src={thumbnailUrl} alt={title} />
       <div className="text-left">
         <h3 className="font-medium">Item {id}</h3>

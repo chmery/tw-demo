@@ -17,19 +17,20 @@ export const SearchBar = ({ onSearch }: Props) => {
   };
 
   return (
-    <div className="flex items-center gap-x-3">
-      <LuSearch className="text-grey-dark text-2xl" />
+    <div className="flex items-center gap-x-2 relative w-full">
       <input
         value={inputValue}
-        className="p-4 rounded-lg outline-grey-dark w-full placeholder:text-grey-dark"
+        className="border-default py-4 pl-4 pr-[6.5rem] rounded-lg outline-grey-dark w-full placeholder:text-grey-dark "
         placeholder="Search items..."
         name="search"
         type="text"
         onChange={(e) => setInputValue(e.target.value)}
       />
-      <Button onClick={searchHandler} disabled={isEmpty}>
-        Search
-      </Button>
+      {!isEmpty && (
+        <Button onClick={searchHandler} className="absolute right-2">
+          <LuSearch className="text-grey-dark text-2xl" />
+        </Button>
+      )}
     </div>
   );
 };

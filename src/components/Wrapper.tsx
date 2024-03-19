@@ -5,5 +5,5 @@ interface Props {
 }
 
 export const Wrapper = ({ children }: Props) => {
-  return <div className="m-auto px-2 max-w-[600px] mt-16">{children}</div>;
+  return <div className="m-auto px-2 max-w-[550px] mt-16">{children}</div>;
 };

@@ -10,7 +10,7 @@ interface Props {
 export const Button = ({ children, onClick, disabled, className }: Props) => {
   return (
     <button
-      className={`border-default rounded-md hover:bg-hover py-2 px-4 transition disabled:bg-hover disabled:cursor-not-allowed disabled:text-grey-dark ${
+      className={`border-default rounded-md hover:bg-hover py-2 px-2 transition disabled:bg-hover disabled:cursor-not-allowed disabled:text-grey-dark ${
         className ? className : ""
       }`}
       onClick={onClick}

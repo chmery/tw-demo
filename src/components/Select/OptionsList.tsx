@@ -8,7 +8,7 @@ interface Props {
 
 export const OptionsList = ({ options, onSelect, selected }: Props) => {
   return (
-    <div className="border-default rounded-md p-1 absolute top-12 bg-[#ffff]">
+    <div className="border-default rounded-md p-1 absolute top-16 bg-[#ffff]">
       {options.map((option) => {
         const isOptionSelected = option === selected;
 
