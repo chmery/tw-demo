@@ -6,6 +6,7 @@ import { Wrapper } from "./components/Wrapper.tsx";
 import { Root } from "./routes/Root.tsx";
 import { Layout } from "./components/Layout.tsx";
 import { Search } from "./routes/Search.tsx";
+import { getProducts } from "./utils/getProducts.ts";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
       {
         path: "/search",
         element: <Search />,
+        loader: ({ request }) => getProducts(request),
       },
     ],
   },

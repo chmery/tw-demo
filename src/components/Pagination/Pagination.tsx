@@ -3,42 +3,56 @@ import { useSearchParams } from "react-router-dom";
 import { PaginationButton } from "./PaginationButton";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
-export const Pagination = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+interface Props {
+  totalResults: number;
+  perPage: number;
+}
+
+export const Pagination = ({ totalResults, perPage }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // temporary - change to dynamic value in future
-  const MAX_PAGE = 30;
+  const initialPage = searchParams.get("page") ? +searchParams.get("page") : 1;
+  const [currentPage, setCurrentPage] = useState(initialPage);
+
+  const maxPage = Math.ceil(totalResults / perPage);
 
   const isAtBeginning = currentPage < 4;
-  const isInMiddle = currentPage >= 4 && currentPage < MAX_PAGE - 3;
-  const isAtEnd = currentPage >= MAX_PAGE - 3;
+  const isInMiddle = currentPage >= 4 && currentPage < maxPage - 3;
+  const isAtEnd = currentPage >= maxPage - 3;
+
+  const isExtendedPagination = maxPage > 6;
 
   const pages = useMemo(() => {
     const array = [];
 
-    for (let i = 1; i <= MAX_PAGE; i++) {
+    for (let i = 1; i <= maxPage; i++) {
       array.push(i);
     }
 
     return array;
-  }, []);
+  }, [maxPage]);
 
   const incrementPageHandler = () => {
-    if (currentPage === MAX_PAGE) return;
+    if (currentPage === maxPage) return;
     setCurrentPage((prevState) => ++prevState);
-    setSearchParams({ p: `${currentPage + 1}` });
+    setSearchParams((prevState) => {
+      return { ...Object.fromEntries(prevState), page: `${currentPage + 1}` };
+    });
   };
 
   const decreasePageHandler = () => {
     if (currentPage === 1) return;
     setCurrentPage((prevState) => --prevState);
-    setSearchParams({ p: `${currentPage - 1}` });
+    setSearchParams((prevState) => {
+      return { ...Object.fromEntries(prevState), page: `${currentPage - 1}` };
+    });
   };
 
   const switchPageHandler = (number: number) => {
-    setSearchParams({ p: `${number}` });
     setCurrentPage(number);
+    setSearchParams((prevState) => {
+      return { ...Object.fromEntries(prevState), page: `${number}` };
+    });
   };
 
   return (
@@ -47,17 +61,9 @@ export const Pagination = () => {
         <MdKeyboardArrowLeft />
       </PaginationButton>
 
-      <PaginationButton
-        number={1}
-        currentPage={currentPage}
-        onClick={() => switchPageHandler(1)}
-      />
-
-      {currentPage >= 5 && <span className="text-grey-dark">...</span>}
-
-      {isAtBeginning &&
+      {!isExtendedPagination &&
         pages
-          .slice(1, 5)
+          .slice(0, maxPage)
           .map((number) => (
             <PaginationButton
               number={number}
@@ -67,39 +73,63 @@ export const Pagination = () => {
             />
           ))}
 
-      {isInMiddle &&
-        pages
-          .slice(currentPage - 3, currentPage + 2)
-          .map((number) => (
-            <PaginationButton
-              number={number}
-              currentPage={currentPage}
-              onClick={() => switchPageHandler(number)}
-              key={number}
-            />
-          ))}
+      {isExtendedPagination && (
+        <>
+          <PaginationButton
+            number={1}
+            currentPage={currentPage}
+            onClick={() => switchPageHandler(1)}
+          />
 
-      {isAtEnd &&
-        pages
-          .slice(MAX_PAGE - 5, MAX_PAGE - 1)
-          .map((number) => (
-            <PaginationButton
-              number={number}
-              currentPage={currentPage}
-              onClick={() => switchPageHandler(number)}
-              key={number}
-            />
-          ))}
+          {currentPage >= 5 && <span className="text-grey-dark">...</span>}
 
-      {currentPage < MAX_PAGE - 3 && (
-        <span className="text-grey-dark">...</span>
+          {isAtBeginning &&
+            pages
+              .slice(1, 5)
+              .map((number) => (
+                <PaginationButton
+                  number={number}
+                  currentPage={currentPage}
+                  onClick={() => switchPageHandler(number)}
+                  key={number}
+                />
+              ))}
+
+          {isInMiddle &&
+            pages
+              .slice(currentPage - 3, currentPage + 2)
+              .map((number) => (
+                <PaginationButton
+                  number={number}
+                  currentPage={currentPage}
+                  onClick={() => switchPageHandler(number)}
+                  key={number}
+                />
+              ))}
+
+          {isAtEnd &&
+            pages
+              .slice(maxPage - 5, maxPage - 1)
+              .map((number) => (
+                <PaginationButton
+                  number={number}
+                  currentPage={currentPage}
+                  onClick={() => switchPageHandler(number)}
+                  key={number}
+                />
+              ))}
+
+          {currentPage < maxPage - 3 && (
+            <span className="text-grey-dark">...</span>
+          )}
+
+          <PaginationButton
+            number={maxPage}
+            currentPage={currentPage}
+            onClick={() => switchPageHandler(maxPage)}
+          />
+        </>
       )}
-
-      <PaginationButton
-        number={MAX_PAGE}
-        currentPage={currentPage}
-        onClick={() => switchPageHandler(MAX_PAGE)}
-      />
 
       <PaginationButton onClick={incrementPageHandler}>
         <MdKeyboardArrowRight />
