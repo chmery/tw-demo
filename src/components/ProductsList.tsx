@@ -1,28 +1,32 @@
 import { IoMdAdd } from "react-icons/io";
 import { Button } from "./Button";
 
-interface Item {
+interface Product {
   id: number;
   title: string;
   description: string;
   images: string[];
 }
 
-interface ItemProps {
+interface ProductProps {
   onAdd: (id: number) => void;
-  item: Item;
+  product: Product;
 }
 
-interface ItemsListProps {
-  items: Item[];
+interface ProductsListProps {
+  products: Product[];
 }
 
-const Item = ({ item, onAdd }: ItemProps) => {
-  const { id, title, images, description } = item;
+const Product = ({ product, onAdd }: ProductProps) => {
+  const { id, title, images, description } = product;
 
   return (
     <div className="flex gap-x-4 items-center border-solid border-b border-grey-light py-6 last:border-b-0">
-      <img className="w-20 h-20 rounded-lg" src={images[0]} alt={title} />
+      <img
+        className=" w-20 h-20 rounded-lg object-cover"
+        src={images[0]}
+        alt={title}
+      />
       <div className="text-left">
         <h3 className="font-medium">{title}</h3>
         <p className="text-grey-dark">{description}</p>
@@ -37,13 +41,13 @@ const Item = ({ item, onAdd }: ItemProps) => {
   );
 };
 
-export const ItemsList = ({ items }: ItemsListProps) => {
-  const addItemHandler = (id: number) => {};
+export const ProductsList = ({ products }: ProductsListProps) => {
+  const addProductHandler = (id: number) => {};
 
   return (
     <div>
-      {items.map((item) => (
-        <Item item={item} key={item.id} onAdd={addItemHandler} />
+      {products.map((product) => (
+        <Product product={product} key={product.id} onAdd={addProductHandler} />
       ))}
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { PaginationButton } from "./PaginationButton";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
@@ -12,8 +12,12 @@ interface Props {
 export const Pagination = ({ totalResults, perPage }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const initialPage = searchParams.get("page") ? +searchParams.get("page") : 1;
-  const [currentPage, setCurrentPage] = useState(initialPage);
+  const getInitialPage = () => {
+    const page = searchParams.get("page");
+    return page === null ? 1 : +page;
+  };
+
+  const [currentPage, setCurrentPage] = useState(getInitialPage());
 
   const maxPage = Math.ceil(totalResults / perPage);
 
@@ -27,7 +31,7 @@ export const Pagination = ({ totalResults, perPage }: Props) => {
 
   const incrementPageHandler = () => {
     if (currentPage === maxPage) return;
-    setCurrentPage((prevState) => ++prevState);
+    setCurrentPage((prevState) => prevState + 1);
     setSearchParams((prevState) => {
       return { ...Object.fromEntries(prevState), page: `${currentPage + 1}` };
     });
@@ -35,7 +39,7 @@ export const Pagination = ({ totalResults, perPage }: Props) => {
 
   const decreasePageHandler = () => {
     if (currentPage === 1) return;
-    setCurrentPage((prevState) => --prevState);
+    setCurrentPage((prevState) => prevState - 1);
     setSearchParams((prevState) => {
       return { ...Object.fromEntries(prevState), page: `${currentPage - 1}` };
     });
@@ -47,6 +51,11 @@ export const Pagination = ({ totalResults, perPage }: Props) => {
       return { ...Object.fromEntries(prevState), page: `${number}` };
     });
   };
+
+  useEffect(() => {
+    const page = searchParams.get("page");
+    if (page) setCurrentPage(+page);
+  }, [searchParams]);
 
   return (
     <nav className="flex justify-center items-center">

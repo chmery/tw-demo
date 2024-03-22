@@ -11,8 +11,8 @@ export interface ProductsData {
 }
 
 export const getProducts = async (request: Request): Promise<ProductsData> => {
-  const searchParams = getSearchParams(request);
-  const fetchUrl = `https://dummyjson.com/products${searchParams}&select=title,description,images`;
+  const searchParams = getSearchParams(request.url);
+  const fetchUrl = `https://dummyjson.com/products${searchParams}`;
 
   try {
     const response = await fetch(fetchUrl);

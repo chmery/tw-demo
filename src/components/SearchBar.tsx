@@ -20,7 +20,7 @@ export const SearchBar = ({ onSearch }: Props) => {
     <div className="flex items-center gap-x-2 relative w-full">
       <input
         value={inputValue}
-        className="border-default py-4 pl-4 pr-[6.5rem] rounded-lg outline-grey-dark w-full placeholder:text-grey-dark "
+        className="border-default py-4 pl-4 pr-14 rounded-lg outline-grey-dark w-full placeholder:text-grey-dark "
         placeholder="Search items..."
         name="search"
         type="text"

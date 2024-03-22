@@ -1,5 +1,5 @@
 import { useLoaderData, useSearchParams } from "react-router-dom";
-import { ItemsList } from "../components/ItemsList";
+import { ProductsList } from "../components/ProductsList";
 import { Pagination } from "../components/Pagination/Pagination";
 import { SearchBar } from "../components/SearchBar";
 import { Select } from "../components/Select/Select";
@@ -13,7 +13,7 @@ export const Search = () => {
 
   const searchHandler = (inputValue: string) => {
     setSearchParams((prevState) => {
-      return { ...Object.fromEntries(prevState), q: inputValue };
+      return { ...Object.fromEntries(prevState), q: inputValue, page: "1" };
     });
   };
 
@@ -24,7 +24,7 @@ export const Search = () => {
     }
 
     setSearchParams((prevState) => {
-      return { ...Object.fromEntries(prevState), limit: option };
+      return { ...Object.fromEntries(prevState), limit: option, page: "1" };
     });
     setPerPage(+option);
   };
@@ -35,7 +35,7 @@ export const Search = () => {
         <SearchBar onSearch={searchHandler} />
         <div className="flex gap-x-2">
           <Select
-            options={["5", "10", "15"]}
+            options={["5", "10"]}
             name="Results"
             onSelect={selectHandler}
           />
@@ -46,8 +46,12 @@ export const Search = () => {
           />
         </div>
       </div>
-      <ItemsList items={products} />
-      <Pagination totalResults={totalResults} perPage={perPage} />
+      {totalResults > 0 && (
+        <>
+          <ProductsList products={products} />
+          <Pagination totalResults={totalResults} perPage={perPage} />
+        </>
+      )}
     </div>
   );
 };
