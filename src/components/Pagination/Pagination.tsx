@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { PaginationButton } from "./PaginationButton";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { useGetPages } from "../../hooks/useGetPages";
 
 interface Props {
   totalResults: number;
@@ -22,15 +23,7 @@ export const Pagination = ({ totalResults, perPage }: Props) => {
 
   const isExtendedPagination = maxPage > 6;
 
-  const pages = useMemo(() => {
-    const array = [];
-
-    for (let i = 1; i <= maxPage; i++) {
-      array.push(i);
-    }
-
-    return array;
-  }, [maxPage]);
+  const pages = useGetPages(maxPage);
 
   const incrementPageHandler = () => {
     if (currentPage === maxPage) return;
