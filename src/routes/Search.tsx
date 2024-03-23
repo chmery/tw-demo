@@ -3,7 +3,6 @@ import { ProductsList } from "../components/ProductsList";
 import { Pagination } from "../components/Pagination/Pagination";
 import { SearchBar } from "../components/SearchBar";
 import { Select } from "../components/Select/Select";
-import { ProductsData } from "../utils/getProducts";
 import { useState } from "react";
 
 export const Search = () => {

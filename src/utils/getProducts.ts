@@ -1,15 +1,5 @@
 import { getSearchParams } from "./getSearchParams";
 
-export interface ProductsData {
-  products: {
-    id: number;
-    title: string;
-    description: string;
-    images: string[];
-  }[];
-  total: number;
-}
-
 export const getProducts = async (request: Request): Promise<ProductsData> => {
   const searchParams = getSearchParams(request.url);
   const fetchUrl = `https://dummyjson.com/products${searchParams}`;

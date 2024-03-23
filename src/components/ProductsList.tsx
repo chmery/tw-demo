@@ -1,13 +1,6 @@
 import { IoMdAdd } from "react-icons/io";
 import { Button } from "./Button";
 
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  images: string[];
-}
-
 interface ProductProps {
   onAdd: (id: number) => void;
   product: Product;
