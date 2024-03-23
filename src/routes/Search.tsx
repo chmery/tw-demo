@@ -4,9 +4,10 @@ import { Pagination } from "../components/Pagination/Pagination";
 import { SearchBar } from "../components/SearchBar";
 import { Select } from "../components/Select/Select";
 import { useState } from "react";
+import { PER_PAGE_OPTIONS, SORT_OPTIONS } from "../constants/constants";
 
 export const Search = () => {
-  const [perPage, setPerPage] = useState(5);
+  const [perPage, setPerPage] = useState(+PER_PAGE_OPTIONS[0]);
   const [searchParams, setSearchParams] = useSearchParams();
   const { products, total: totalResults } = useLoaderData() as ProductsData;
 
@@ -34,15 +35,11 @@ export const Search = () => {
         <SearchBar onSearch={searchHandler} />
         <div className="flex gap-x-2">
           <Select
-            options={["5", "10"]}
+            options={PER_PAGE_OPTIONS}
             name="Results"
             onSelect={selectHandler}
           />
-          <Select
-            options={["Asc.", "Desc."]}
-            name="Sort"
-            onSelect={selectHandler}
-          />
+          <Select options={SORT_OPTIONS} name="Sort" onSelect={selectHandler} />
         </div>
       </div>
       {totalResults > 0 && (
