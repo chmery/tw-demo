@@ -3,31 +3,63 @@ import { ProductsList } from "../components/ProductsList";
 import { Pagination } from "../components/Pagination/Pagination";
 import { SearchBar } from "../components/SearchBar";
 import { Select } from "../components/Select/Select";
-import { useState } from "react";
-import { PER_PAGE_OPTIONS, SORT_OPTIONS } from "../constants/constants";
+import { useCallback, useEffect, useState } from "react";
+import {
+  PER_PAGE_OPTIONS,
+  SORT_OPTIONS,
+  SelectOption,
+} from "../constants/constants";
+import { getSortedProducts } from "../utils/getSortedProducts";
 
 export const Search = () => {
-  const [perPage, setPerPage] = useState(+PER_PAGE_OPTIONS[0]);
+  // page klik zmienia search params
   const [searchParams, setSearchParams] = useSearchParams();
-  const { products, total: totalResults } = useLoaderData() as ProductsData;
+  const [perPage, setPerPage] = useState(+PER_PAGE_OPTIONS[0].text);
 
-  const searchHandler = (inputValue: string) => {
-    setSearchParams((prevState) => {
-      return { ...Object.fromEntries(prevState), q: inputValue, page: "1" };
-    });
-  };
+  const { products: productsData, total: totalResults } =
+    useLoaderData() as ProductsData;
 
-  const selectHandler = (option: string) => {
-    if (isNaN(Number(option))) {
-      // sort
+  // search params zmieniony wiec state sie zmienia, products data sie zmienia
+
+  const getInitialProducts = useCallback(() => {
+    const order = searchParams.get("order");
+    return order ? getSortedProducts(order, productsData) : productsData;
+  }, [productsData, searchParams]);
+
+  const [products, setProducts] = useState(getInitialProducts());
+
+  const searchHandler = (inputValue: string) =>
+    setSearchParams((prevState) => ({
+      ...Object.fromEntries(prevState),
+      q: inputValue,
+      page: "1",
+    }));
+
+  const selectHandler = (option: SelectOption) => {
+    const { text: limit, order } = option;
+
+    if (typeof order === "string") {
+      setProducts(getSortedProducts(order, products));
+      setSearchParams((prevState) => ({
+        ...Object.fromEntries(prevState),
+        order,
+      }));
       return;
     }
 
-    setSearchParams((prevState) => {
-      return { ...Object.fromEntries(prevState), limit: option, page: "1" };
-    });
+    setSearchParams((prevState) => ({
+      ...Object.fromEntries(prevState),
+      limit,
+      page: "1",
+    }));
     setPerPage(+option);
   };
+
+  console.log("render");
+
+  useEffect(() => {
+    setProducts(getInitialProducts());
+  }, [getInitialProducts]);
 
   return (
     <div className="mt-4 border-default p-4 rounded-lg">
@@ -36,10 +68,14 @@ export const Search = () => {
         <div className="flex gap-x-2">
           <Select
             options={PER_PAGE_OPTIONS}
-            name="Results"
+            selectText="Results"
             onSelect={selectHandler}
           />
-          <Select options={SORT_OPTIONS} name="Sort" onSelect={selectHandler} />
+          <Select
+            options={SORT_OPTIONS}
+            selectText="Sort"
+            onSelect={selectHandler}
+          />
         </div>
       </div>
       {totalResults > 0 && (

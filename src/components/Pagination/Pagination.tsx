@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { PaginationButton } from "./PaginationButton";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
@@ -12,10 +12,10 @@ interface Props {
 export const Pagination = ({ totalResults, perPage }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const getInitialPage = () => {
+  const getInitialPage = useCallback(() => {
     const page = searchParams.get("page");
     return page === null ? 1 : +page;
-  };
+  }, [searchParams]);
 
   const [currentPage, setCurrentPage] = useState(getInitialPage());
 
@@ -53,9 +53,8 @@ export const Pagination = ({ totalResults, perPage }: Props) => {
   };
 
   useEffect(() => {
-    const page = searchParams.get("page");
-    if (page) setCurrentPage(+page);
-  }, [searchParams]);
+    setCurrentPage(getInitialPage());
+  }, [getInitialPage]);
 
   return (
     <nav className="flex justify-center items-center">

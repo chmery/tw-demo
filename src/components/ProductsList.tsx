@@ -11,7 +11,7 @@ interface ProductsListProps {
 }
 
 const Product = ({ product, onAdd }: ProductProps) => {
-  const { id, title, images, description } = product;
+  const { id, title, images, description, price } = product;
 
   return (
     <div className="flex gap-x-4 items-center border-solid border-b border-grey-light py-6 last:border-b-0">
@@ -23,6 +23,7 @@ const Product = ({ product, onAdd }: ProductProps) => {
       <div className="text-left">
         <h3 className="font-medium">{title}</h3>
         <p className="text-grey-dark">{description}</p>
+        <p className="mt-2">${price}</p>
       </div>
       <Button
         className="ml-auto flex items-center gap-x-1"
