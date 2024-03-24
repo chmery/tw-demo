@@ -9,6 +9,7 @@ import {
   SelectOption,
 } from "../constants/constants";
 import { ProductsData } from "../utils/getProducts";
+import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
 export const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -71,6 +72,12 @@ export const Search = () => {
             perPage={perPage}
           />
         </>
+      )}
+      {!totalResults && (
+        <div className="flex flex-col items-center py-28">
+          <HiMiniMagnifyingGlass className="text-grey-dark text-3xl" />
+          <h3 className="text-grey-dark">No results found</h3>
+        </div>
       )}
     </div>
   );
