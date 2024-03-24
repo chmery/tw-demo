@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { Button } from "../components/Button";
+import { LinkButton } from "../components/LinkButton";
 
 export const Root = () => {
   return (
@@ -13,9 +12,7 @@ export const Root = () => {
         Explore, Discover, and Save with Our Dynamic Search and Add App Designed
         to Enhance Your Favorites Collection.
       </p>
-      <Button className="w-[300px]">
-        <Link to="search">Start Searching</Link>
-      </Button>
+      <LinkButton to="search" text="Start Searching" classname="w-[300px]" />
     </div>
   );
 };

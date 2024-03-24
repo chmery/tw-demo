@@ -30,8 +30,7 @@ export const getProducts = async (request: Request): Promise<ProductsData> => {
 
   try {
     const res = await fetch(fetchUrl);
-    if (!res.ok)
-      throw new Error(`Failed to fetch data. Status: ${res.status}.`);
+    if (!res.ok) throw new Error(`Failed to fetch data. Status: ${res.status}`);
 
     const productsDataJSON: ProductsDataJSON | undefined = await res.json();
     if (!productsDataJSON) throw new Error("Failed to parse JSON data.");
