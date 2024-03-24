@@ -47,7 +47,7 @@ export const Search = () => {
 
   return (
     <div className="mt-4 border-default p-4 rounded-lg">
-      <div className="flex items-center justify-between gap-x-2">
+      <div className="flex items-start justify-between gap-x-2">
         <SearchBar onSearch={searchHandler} />
         <div className="flex gap-x-2">
           <Select

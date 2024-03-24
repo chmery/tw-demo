@@ -36,12 +36,12 @@ export const getProducts = async (request: Request): Promise<ProductsData> => {
     const productsDataJSON: ProductsDataJSON | undefined = await res.json();
     if (!productsDataJSON) throw new Error("Failed to parse JSON data.");
 
-    const { products, total, limit } = productsDataJSON;
+    const { products, total } = productsDataJSON;
 
     const productsData = {
       products: order ? getSortedProducts(order, products) : products,
       total,
-      limit,
+      limit: +limit,
       page: +page,
     };
 
