@@ -1,13 +1,14 @@
 import { IoMdAdd } from "react-icons/io";
 import { Button } from "./Button";
+import { Product as ProductInterface } from "../utils/getProducts";
 
 interface ProductProps {
   onAdd: (id: number) => void;
-  product: Product;
+  product: ProductInterface;
 }
 
 interface ProductsListProps {
-  products: Product[];
+  products: ProductInterface[];
 }
 
 const Product = ({ product, onAdd }: ProductProps) => {

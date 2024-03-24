@@ -3,30 +3,22 @@ import { ProductsList } from "../components/ProductsList";
 import { Pagination } from "../components/Pagination/Pagination";
 import { SearchBar } from "../components/SearchBar";
 import { Select } from "../components/Select/Select";
-import { useCallback, useEffect, useState } from "react";
 import {
   PER_PAGE_OPTIONS,
   SORT_OPTIONS,
   SelectOption,
 } from "../constants/constants";
-import { getSortedProducts } from "../utils/getSortedProducts";
+import { ProductsData } from "../utils/getProducts";
 
 export const Search = () => {
-  // page klik zmienia search params
   const [searchParams, setSearchParams] = useSearchParams();
-  const [perPage, setPerPage] = useState(+PER_PAGE_OPTIONS[0].text);
 
-  const { products: productsData, total: totalResults } =
-    useLoaderData() as ProductsData;
-
-  // search params zmieniony wiec state sie zmienia, products data sie zmienia
-
-  const getInitialProducts = useCallback(() => {
-    const order = searchParams.get("order");
-    return order ? getSortedProducts(order, productsData) : productsData;
-  }, [productsData, searchParams]);
-
-  const [products, setProducts] = useState(getInitialProducts());
+  const {
+    products,
+    total: totalResults,
+    limit: perPage,
+    page: currentPage,
+  } = useLoaderData() as ProductsData;
 
   const searchHandler = (inputValue: string) =>
     setSearchParams((prevState) => ({
@@ -38,8 +30,7 @@ export const Search = () => {
   const selectHandler = (option: SelectOption) => {
     const { text: limit, order } = option;
 
-    if (typeof order === "string") {
-      setProducts(getSortedProducts(order, products));
+    if (order) {
       setSearchParams((prevState) => ({
         ...Object.fromEntries(prevState),
         order,
@@ -52,14 +43,7 @@ export const Search = () => {
       limit,
       page: "1",
     }));
-    setPerPage(+option);
   };
-
-  console.log("render");
-
-  useEffect(() => {
-    setProducts(getInitialProducts());
-  }, [getInitialProducts]);
 
   return (
     <div className="mt-4 border-default p-4 rounded-lg">
@@ -81,7 +65,11 @@ export const Search = () => {
       {totalResults > 0 && (
         <>
           <ProductsList products={products} />
-          <Pagination totalResults={totalResults} perPage={perPage} />
+          <Pagination
+            currentPage={currentPage}
+            totalResults={totalResults}
+            perPage={perPage}
+          />
         </>
       )}
     </div>

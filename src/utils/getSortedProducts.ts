@@ -1,3 +1,5 @@
+import { Product } from "./getProducts";
+
 export const getSortedProducts = (order: string, products: Product[]) => {
   const productsCopy = structuredClone(products);
 
