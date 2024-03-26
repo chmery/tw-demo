@@ -1,4 +1,4 @@
-import { Outlet, useSearchParams } from "react-router-dom";
+import { Outlet, useNavigation, useSearchParams } from "react-router-dom";
 import { Nav } from "./Nav";
 import { createContext, useState } from "react";
 import { Product } from "../utils/getProducts";
@@ -11,6 +11,7 @@ import { Select } from "./Select/Select";
 import { SearchBar } from "./SearchBar";
 import { getSortedProducts } from "../utils/getSortedProducts";
 import { getSearchResults } from "../utils/getSearchResults";
+import { SkeletonElements } from "./SkeletonElements";
 
 interface AddedProducts {
   products: Product[];
@@ -39,6 +40,10 @@ export const Layout = () => {
     initialAddedProductsState
   );
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigation = useNavigation();
+
+  const limit = searchParams.get("limit");
+  const skeletonElementsAmount = limit ? +limit : +PER_PAGE_OPTIONS[0].text;
 
   const searchHandler = (inputValue: string) => {
     setSearchParams((prevState) => ({
@@ -106,7 +111,11 @@ export const Layout = () => {
             />
           </div>
         </div>
-        <Outlet />
+        {navigation.state === "loading" ? (
+          <SkeletonElements amount={skeletonElementsAmount} />
+        ) : (
+          <Outlet />
+        )}
       </div>
     </AddedProductsContext.Provider>
   );
