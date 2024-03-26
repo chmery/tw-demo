@@ -36,7 +36,7 @@ export const Select = ({ options, onSelect, selectName }: Props) => {
 
   return (
     <div
-      className="flex flex-col items-center relative"
+      className="flex flex-col items-center relative whitespace-nowrap"
       onClick={() => setIsExpanded(!isExpanded)}
       ref={selectRef}
     >
