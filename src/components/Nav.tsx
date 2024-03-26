@@ -7,7 +7,7 @@ const NavItem = ({ text }: { text: string }) => {
   const activeClasses = "bg-grey-light w-3/5";
   const notActiveClasses = "w-2/5";
 
-  const className = `border-default p-4 rounded-xl hover:bg-hover text-center cursor-pointer transition-all ease-in-out ${
+  const className = `border-default p-4 rounded-xl hover:bg-grey-hover text-center cursor-pointer transition-all ease-in-out ${
     isActive ? activeClasses : notActiveClasses
   }`;
 

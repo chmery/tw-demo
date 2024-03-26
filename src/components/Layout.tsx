@@ -1,11 +1,113 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useSearchParams } from "react-router-dom";
 import { Nav } from "./Nav";
+import { createContext, useState } from "react";
+import { Product } from "../utils/getProducts";
+import {
+  PER_PAGE_OPTIONS,
+  SORT_OPTIONS,
+  SelectOption,
+} from "../constants/constants";
+import { Select } from "./Select/Select";
+import { SearchBar } from "./SearchBar";
+import { getSortedProducts } from "../utils/getSortedProducts";
+import { getSearchResults } from "../utils/getSearchResults";
+
+interface AddedProducts {
+  products: Product[];
+  searchResults: Product[];
+  sortedProducts: Product[];
+}
+
+interface AddedProductsContext {
+  addedProducts: AddedProducts;
+  setAddedProducts: React.Dispatch<React.SetStateAction<AddedProducts>>;
+}
+
+const initialAddedProductsState = {
+  products: [],
+  searchResults: [],
+  sortedProducts: [],
+};
+
+export const AddedProductsContext = createContext<AddedProductsContext>({
+  addedProducts: initialAddedProductsState,
+  setAddedProducts: () => {},
+});
 
 export const Layout = () => {
+  const [addedProducts, setAddedProducts] = useState<AddedProducts>(
+    initialAddedProductsState
+  );
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const searchHandler = (inputValue: string) => {
+    setSearchParams((prevState) => ({
+      ...Object.fromEntries(prevState),
+      q: inputValue,
+      page: "1",
+    }));
+
+    const searchResults = getSearchResults(inputValue, addedProducts.products);
+    setAddedProducts((prevState) => ({ ...prevState, searchResults }));
+  };
+
+  const sortSelectHandler = (option: SelectOption) => {
+    const { order } = option;
+    if (!order) return;
+
+    const isSearching = searchParams.get("q");
+
+    setSearchParams((prevState) => ({
+      ...Object.fromEntries(prevState),
+      order,
+    }));
+
+    setAddedProducts((prevState) => {
+      const sortedProducts = getSortedProducts(order, prevState.products);
+      const sortedSearchResults = getSortedProducts(
+        order,
+        prevState.searchResults
+      );
+
+      return {
+        ...prevState,
+        sortedProducts: isSearching ? prevState.products : sortedProducts,
+        searchResults: isSearching
+          ? sortedSearchResults
+          : prevState.searchResults,
+      };
+    });
+  };
+
+  const perPageSelectHandler = (option: SelectOption) => {
+    setSearchParams((prevState) => ({
+      ...Object.fromEntries(prevState),
+      limit: option.text,
+      page: "1",
+    }));
+  };
+
   return (
-    <>
+    <AddedProductsContext.Provider value={{ addedProducts, setAddedProducts }}>
       <Nav />
-      <Outlet />
-    </>
+      <div className="mt-4 border-default p-4 rounded-lg">
+        <div className="flex items-start justify-between gap-x-2">
+          <SearchBar onSearch={searchHandler} />
+          <div className="flex gap-x-2">
+            <Select
+              options={PER_PAGE_OPTIONS}
+              selectText="Results"
+              onSelect={perPageSelectHandler}
+            />
+            <Select
+              options={SORT_OPTIONS}
+              selectText="Sort"
+              onSelect={sortSelectHandler}
+            />
+          </div>
+        </div>
+        <Outlet />
+      </div>
+    </AddedProductsContext.Provider>
   );
 };

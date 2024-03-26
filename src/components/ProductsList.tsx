@@ -1,18 +1,29 @@
 import { IoMdAdd } from "react-icons/io";
 import { Button } from "./Button";
-import { Product as ProductInterface } from "../utils/getProducts";
+import { Product } from "../utils/getProducts";
+import { useContext } from "react";
+import { AddedProductsContext } from "./Layout";
+import { MdOutlineClose } from "react-icons/md";
 
-interface ProductProps {
-  onAdd: (id: number) => void;
-  product: ProductInterface;
-}
+const ProductItem = ({ product }: { product: Product }) => {
+  const { title, images, description, price, id } = product;
+  const { addedProducts, setAddedProducts } = useContext(AddedProductsContext);
+  const isAdded = addedProducts.products.some((product) => product.id === id);
 
-interface ProductsListProps {
-  products: ProductInterface[];
-}
+  const addProductHandler = () =>
+    setAddedProducts((prevState) => ({
+      ...prevState,
+      products: [...prevState.products, product],
+    }));
 
-const Product = ({ product, onAdd }: ProductProps) => {
-  const { id, title, images, description, price } = product;
+  const removeProductHandler = () =>
+    setAddedProducts((prevState) => ({
+      ...prevState,
+      products: prevState.products.filter((product) => product.id !== id),
+      sortedProducts: prevState.sortedProducts.filter(
+        (product) => product.id !== id
+      ),
+    }));
 
   return (
     <div className="flex gap-x-4 items-center border-solid border-b border-grey-light py-6 last:border-b-0">
@@ -26,23 +37,31 @@ const Product = ({ product, onAdd }: ProductProps) => {
         <p className="text-grey-dark">{description}</p>
         <p className="mt-2">${price}</p>
       </div>
-      <Button
-        className="ml-auto flex items-center gap-x-1"
-        onClick={() => onAdd(id)}
-      >
-        Add <IoMdAdd />
-      </Button>
+      {!isAdded && (
+        <Button
+          className="ml-auto flex items-center gap-x-1"
+          onClick={addProductHandler}
+        >
+          Add <IoMdAdd />
+        </Button>
+      )}
+      {isAdded && (
+        <Button
+          className="ml-auto flex items-center gap-x-1 bg-red hover:bg-red-hover text-white"
+          onClick={removeProductHandler}
+        >
+          Remove <MdOutlineClose />
+        </Button>
+      )}
     </div>
   );
 };
 
-export const ProductsList = ({ products }: ProductsListProps) => {
-  const addProductHandler = (id: number) => {};
-
+export const ProductsList = ({ products }: { products: Product[] }) => {
   return (
     <div>
       {products.map((product) => (
-        <Product product={product} key={product.id} onAdd={addProductHandler} />
+        <ProductItem product={product} key={product.id} />
       ))}
     </div>
   );

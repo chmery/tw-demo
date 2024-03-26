@@ -9,7 +9,7 @@ interface Props {
 export const LinkButton = ({ to, text, classname }: Props) => {
   return (
     <Link
-      className={`border-default rounded-md hover:bg-hover py-2 px-2 transition inline-block ${
+      className={`border-default rounded-md hover:bg-grey-hover py-2 px-2 transition inline-block ${
         classname ? classname : ""
       }`}
       to={to}

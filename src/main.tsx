@@ -8,6 +8,7 @@ import { Layout } from "./components/Layout.tsx";
 import { Search } from "./routes/Search.tsx";
 import { getProducts } from "./utils/getProducts.ts";
 import { ErrorElement } from "./components/ErrorElement.tsx";
+import { Added } from "./routes/Added.tsx";
 
 const router = createBrowserRouter([
   {
@@ -24,14 +25,18 @@ const router = createBrowserRouter([
         element: <Search />,
         loader: ({ request }) => getProducts(request),
       },
+      {
+        path: "/added",
+        element: <Added />,
+      },
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  //<React.StrictMode>
-  <Wrapper>
-    <RouterProvider router={router} />
-  </Wrapper>
-  //</React.StrictMode>
+  <React.StrictMode>
+    <Wrapper>
+      <RouterProvider router={router} />
+    </Wrapper>
+  </React.StrictMode>
 );

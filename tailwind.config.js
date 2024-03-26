@@ -7,9 +7,12 @@ export default {
   theme: {
     colors: {
       black: "#050505",
+      white: "#f7f7f7",
+      red: "#fa5050",
+      "red-hover": "#ff7070",
       "grey-light": "#E5E7EB",
       "grey-dark": "#9095A0",
-      hover: "#F4F6F9",
+      "grey-hover": "#F4F6F9",
     },
     fontFamily: {
       sans: ["Inter", ...defaultTheme.fontFamily.sans],

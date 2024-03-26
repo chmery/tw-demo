@@ -55,7 +55,7 @@ export const SearchBar = ({ onSearch }: Props) => {
         <p className="flex items-center gap-x-2">
           Results for:
           <span
-            className="flex gap-x-1 items-center font-medium border-default py-2 px-4 hover:bg-hover rounded-md cursor-pointer"
+            className="flex gap-x-1 items-center font-medium border-default py-2 px-4 hover:bg-grey-hover rounded-md cursor-pointer"
             onClick={() => searchHandler(true)}
           >
             {inputValueBeforeSearch.current}

@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoChevronDownSharp, IoChevronUpSharp } from "react-icons/io5";
 import { OptionsList } from "./OptionsList";
 import { useClickedOutside } from "../../hooks/useClickedOutside";
 import { SelectOption } from "../../constants/constants";
+import { useLocation } from "react-router-dom";
 
 interface Props {
   options: SelectOption[];
@@ -16,6 +17,8 @@ export const Select = ({ options, onSelect, selectText }: Props) => {
     text: "",
   });
 
+  const { pathname } = useLocation();
+
   const selectHandler = (option: SelectOption) => {
     setSelectedOption(option);
     setIsExpanded(false);
@@ -25,6 +28,10 @@ export const Select = ({ options, onSelect, selectText }: Props) => {
   const selectRef = useClickedOutside<HTMLDivElement>(() =>
     setIsExpanded(false)
   );
+
+  useEffect(() => {
+    setSelectedOption({ text: "" });
+  }, [pathname]);
 
   return (
     <div
