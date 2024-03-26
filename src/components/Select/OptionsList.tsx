@@ -9,23 +9,23 @@ interface Props {
 
 export const OptionsList = ({ options, onSelect, selectedOption }: Props) => {
   return (
-    <div className="border-default rounded-md p-1 absolute top-16 bg-[#ffff]">
+    <ul className="border-default rounded-md p-1 absolute top-16 bg-[#ffff]">
       {options.map((option) => {
         const isOptionSelected = option.text === selectedOption.text;
 
         return (
-          <div
-            className="rounded-md hover:bg-hover py-1 px-8 cursor-pointer relative whitespace-nowrap"
+          <li
+            className="flex flex-col items-center rounded-md hover:bg-grey-hover py-1 px-8 cursor-pointer relative whitespace-nowrap"
             onClick={() => onSelect(option)}
             key={option.text}
           >
             {isOptionSelected && (
               <IoCheckmarkSharp className="absolute top-0 bottom-0 left-2 my-auto" />
             )}
-            <span>{option.text}</span>
-          </div>
+            {option.text}
+          </li>
         );
       })}
-    </div>
+    </ul>
   );
 };

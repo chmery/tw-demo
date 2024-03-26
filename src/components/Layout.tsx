@@ -96,12 +96,12 @@ export const Layout = () => {
           <div className="flex gap-x-2">
             <Select
               options={PER_PAGE_OPTIONS}
-              selectText="Results"
+              selectName="Results"
               onSelect={perPageSelectHandler}
             />
             <Select
               options={SORT_OPTIONS}
-              selectText="Sort"
+              selectName="Sort"
               onSelect={sortSelectHandler}
             />
           </div>

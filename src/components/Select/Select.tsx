@@ -4,14 +4,15 @@ import { OptionsList } from "./OptionsList";
 import { useClickedOutside } from "../../hooks/useClickedOutside";
 import { SelectOption } from "../../constants/constants";
 import { useLocation } from "react-router-dom";
+import { Button } from "../Button";
 
 interface Props {
   options: SelectOption[];
-  selectText: string;
+  selectName: string;
   onSelect: (option: SelectOption) => void;
 }
 
-export const Select = ({ options, onSelect, selectText }: Props) => {
+export const Select = ({ options, onSelect, selectName }: Props) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedOption, setSelectedOption] = useState<SelectOption>({
     text: "",
@@ -39,13 +40,11 @@ export const Select = ({ options, onSelect, selectText }: Props) => {
       onClick={() => setIsExpanded(!isExpanded)}
       ref={selectRef}
     >
-      <div className="px-4 py-4 gap-1 flex items-center justify-center border-default hover:bg-hover rounded-md cursor-pointer whitespace-nowrap">
-        <span className="text-grey-dark ">
-          {selectedOption.text ? selectedOption.text : selectText}
-        </span>
-        {isExpanded && <IoChevronUpSharp className="text-grey-dark" />}
-        {!isExpanded && <IoChevronDownSharp className="text-grey-dark" />}
-      </div>
+      <Button className="text-grey-dark px-4 py-4 flex gap-1 items-center">
+        {selectedOption.text ? selectedOption.text : selectName}
+        {isExpanded && <IoChevronUpSharp />}
+        {!isExpanded && <IoChevronDownSharp />}
+      </Button>
       {isExpanded && (
         <OptionsList
           options={options}
