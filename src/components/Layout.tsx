@@ -96,20 +96,18 @@ export const Layout = () => {
     <AddedProductsContext.Provider value={{ addedProducts, setAddedProducts }}>
       <Nav />
       <div className="sm:mt-4 sm:border-default p-4 pt-0 sm:pt-4 rounded-lg">
-        <div className="sm:flex sm:items-start sm:justify-between sm:gap-x-2">
-          <SearchBar onSearch={searchHandler} />
-          <div className="flex gap-x-2 mt-2 sm:mt-0 justify-between sm:justify-normal">
-            <Select
-              options={PER_PAGE_OPTIONS}
-              selectName="Results"
-              onSelect={perPageSelectHandler}
-            />
-            <Select
-              options={SORT_OPTIONS}
-              selectName="Sort"
-              onSelect={sortSelectHandler}
-            />
-          </div>
+        <SearchBar onSearch={searchHandler} />
+        <div className="flex gap-x-2 mt-2 sm:mt-4  justify-between">
+          <Select
+            options={PER_PAGE_OPTIONS}
+            selectName="Results"
+            onSelect={perPageSelectHandler}
+          />
+          <Select
+            options={SORT_OPTIONS}
+            selectName="Sort"
+            onSelect={sortSelectHandler}
+          />
         </div>
         {navigation.state === "loading" ? (
           <SkeletonElements amount={skeletonElementsAmount} />
