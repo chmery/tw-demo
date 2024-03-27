@@ -26,40 +26,36 @@ const ProductItem = ({ product }: { product: Product }) => {
     }));
 
   return (
-    <div className="flex gap-x-4 items-center border-solid border-b border-grey-light py-6 last:border-b-0">
+    <div className="sm:basis-[calc(50%-0.5rem)] flex flex-col gap-y-4 py-6">
       <img
-        className=" w-20 h-20 rounded-lg object-cover"
+        className="w-full aspect-square object-cover rounded-lg max-w-none"
         src={images[0]}
         alt={title}
       />
-      <div className="text-left">
+
+      <div className=" flex flex-col h-full">
         <h3 className="font-medium">{title}</h3>
         <p className="text-grey-dark">{description}</p>
-        <p className="mt-2">${price}</p>
+        <div className="flex justify-between items-center mt-auto pt-4">
+          <p className="text-lg font-medium">${price}</p>
+          <Button
+            className={`ml-auto items-center gap-x-1 flex ${
+              isAdded && "bg-red hover:bg-red-hover text-white"
+            }`}
+            onClick={isAdded ? removeProductHandler : addProductHandler}
+          >
+            {isAdded ? "Remove" : "Add"}
+            {isAdded ? <MdOutlineClose /> : <IoMdAdd />}
+          </Button>
+        </div>
       </div>
-      {!isAdded && (
-        <Button
-          className="ml-auto flex items-center gap-x-1"
-          onClick={addProductHandler}
-        >
-          Add <IoMdAdd />
-        </Button>
-      )}
-      {isAdded && (
-        <Button
-          className="ml-auto flex items-center gap-x-1 bg-red hover:bg-red-hover text-white"
-          onClick={removeProductHandler}
-        >
-          Remove <MdOutlineClose />
-        </Button>
-      )}
     </div>
   );
 };
 
 export const ProductsList = ({ products }: { products: Product[] }) => {
   return (
-    <div>
+    <div className="sm:flex flex-wrap gap-x-4">
       {products.map((product) => (
         <ProductItem product={product} key={product.id} />
       ))}

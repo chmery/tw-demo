@@ -36,11 +36,11 @@ export const Select = ({ options, onSelect, selectName }: Props) => {
 
   return (
     <div
-      className="flex flex-col items-center relative whitespace-nowrap"
+      className="flex flex-col items-center relative whitespace-nowrap sm:w-auto w-full"
       onClick={() => setIsExpanded(!isExpanded)}
       ref={selectRef}
     >
-      <Button className="text-grey-dark px-4 py-4 flex gap-1 items-center">
+      <Button className="text-grey-dark px-2 py-2 sm:px-4 sm:py-4 flex gap-1 justify-center items-center sm:w-auto w-full">
         {selectedOption.text ? selectedOption.text : selectName}
         {isExpanded && <IoChevronUpSharp />}
         {!isExpanded && <IoChevronDownSharp />}

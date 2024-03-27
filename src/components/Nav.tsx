@@ -4,11 +4,8 @@ const NavItem = ({ text }: { text: string }) => {
   const { pathname } = useLocation();
   const isActive = pathname.replace("/", "") === text.toLowerCase();
 
-  const activeClasses = "bg-grey-light w-3/5";
-  const notActiveClasses = "w-2/5";
-
-  const className = `border-default p-4 rounded-xl hover:bg-grey-hover text-center cursor-pointer transition-all ease-in-out ${
-    isActive ? activeClasses : notActiveClasses
+  const className = `border-default p-2 sm:p-4 rounded-lg hover:bg-grey-hover text-center cursor-pointer transition-all ease-in-out ${
+    isActive ? "bg-grey-light w-3/5" : "w-2/5"
   }`;
 
   return (
@@ -20,8 +17,8 @@ const NavItem = ({ text }: { text: string }) => {
 
 export const Nav = () => {
   return (
-    <nav className="p-4 border-default rounded-xl">
-      <ul className="flex gap-x-4 align items-center">
+    <nav className="p-4 pb-2 sm:pb-4 sm:border-default sm:rounded-xl">
+      <ul className="flex gap-x-2 sm:gap-x-2 align items-center">
         <NavItem text="Search" />
         <NavItem text="Added" />
       </ul>

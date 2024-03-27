@@ -95,10 +95,10 @@ export const Layout = () => {
   return (
     <AddedProductsContext.Provider value={{ addedProducts, setAddedProducts }}>
       <Nav />
-      <div className="mt-4 border-default p-4 rounded-lg">
-        <div className="flex items-start justify-between gap-x-2">
+      <div className="sm:mt-4 sm:border-default p-4 pt-0 sm:pt-4 rounded-lg">
+        <div className="sm:flex sm:items-start sm:justify-between sm:gap-x-2">
           <SearchBar onSearch={searchHandler} />
-          <div className="flex gap-x-2">
+          <div className="flex gap-x-2 mt-2 sm:mt-0 justify-between sm:justify-normal">
             <Select
               options={PER_PAGE_OPTIONS}
               selectName="Results"
