@@ -9,15 +9,10 @@ export const usePaginationCalculations = (
     [perPage, totalResults]
   );
 
-  const pages = useMemo(() => {
-    const array = [];
-
-    for (let i = 1; i <= maxPage; i++) {
-      array.push(i);
-    }
-
-    return array;
-  }, [maxPage]);
+  const pages = useMemo(
+    () => Array.from({ length: maxPage }, (_, index) => ++index),
+    [maxPage]
+  );
 
   return { maxPage, pages };
 };

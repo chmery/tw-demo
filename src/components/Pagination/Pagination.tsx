@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const Pagination = ({ totalResults, perPage, currentPage }: Props) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
   const { pages, maxPage } = usePaginationCalculations(totalResults, perPage);
 
   const isAtBeginning = currentPage < 4;
