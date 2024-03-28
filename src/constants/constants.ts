@@ -10,6 +10,6 @@ export const PER_PAGE_OPTIONS: SelectOption[] = [
 ];
 
 export const SORT_OPTIONS: SelectOption[] = [
-  { text: "Price asc.", order: "asc" },
-  { text: "Price desc.", order: "desc" },
+  { text: "Price", order: "asc" },
+  { text: "Price", order: "desc" },
 ];

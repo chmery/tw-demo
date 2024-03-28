@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IoChevronDownSharp, IoChevronUpSharp } from "react-icons/io5";
+import { IoChevronUpSharp } from "react-icons/io5";
 import { OptionsList } from "./OptionsList";
 import { useClickedOutside } from "../../hooks/useClickedOutside";
 import { SelectOption } from "../../constants/constants";
@@ -42,8 +42,11 @@ export const Select = ({ options, onSelect, selectName }: Props) => {
     >
       <Button className="text-grey-dark px-2 py-2 sm:px-4 sm:py-4 flex gap-1 justify-center items-center w-full">
         {selectedOption.text ? selectedOption.text : selectName}
-        {isExpanded && <IoChevronUpSharp />}
-        {!isExpanded && <IoChevronDownSharp />}
+        {
+          <IoChevronUpSharp
+            className={`transition ${!isExpanded ? "rotate-180" : ""}`}
+          />
+        }
       </Button>
       {isExpanded && (
         <OptionsList

@@ -39,7 +39,7 @@ const ProductItem = ({ product }: { product: Product }) => {
         <div className="flex justify-between items-center mt-auto pt-4">
           <p className="text-lg font-medium">${price}</p>
           <Button
-            className={`ml-auto items-center gap-x-1 flex ${
+            className={`ml-auto items-center gap-x-1 flex px-4 ${
               isAdded && "bg-red hover:bg-red-hover text-white"
             }`}
             onClick={isAdded ? removeProductHandler : addProductHandler}

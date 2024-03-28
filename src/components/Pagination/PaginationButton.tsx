@@ -18,12 +18,10 @@ export const PaginationButton = ({
 
   return (
     <button
-      className={`flex justify-center items-center text-grey-dark hover:bg-grey-hover hover:text-black rounded-md cursor-pointer ${
-        isPageButton && "size-10"
-      } ${isSwitchButton && "py-2 px-2 sm:px-4"} ${
+      className={`size-10 mx-[1px] flex justify-center items-center text-grey-dark hover:bg-grey-hover hover:text-black rounded-md cursor-pointer ${
         isPageButton &&
         currentPage === number &&
-        "font-medium border-default text-black"
+        "font-medium border-default !text-black"
       }`}
       onClick={onClick}
     >
