@@ -25,18 +25,6 @@ export const Pagination = ({ totalResults, perPage, currentPage }: Props) => {
     }));
   };
 
-  const incrementPageHandler = () => {
-    if (currentPage === maxPage) return;
-    updatePageNumber(currentPage + 1);
-  };
-
-  const decreasePageHandler = () => {
-    if (currentPage === 1) return;
-    updatePageNumber(currentPage - 1);
-  };
-
-  const switchPageHandler = (number: number) => updatePageNumber(number);
-
   const generatePaginationButtons = (start: number, end: number) => {
     return pages
       .slice(start, end)
@@ -44,7 +32,7 @@ export const Pagination = ({ totalResults, perPage, currentPage }: Props) => {
         <PaginationButton
           number={number}
           currentPage={currentPage}
-          onClick={() => switchPageHandler(number)}
+          onClick={() => updatePageNumber(number)}
           key={number}
         />
       ));
@@ -52,7 +40,10 @@ export const Pagination = ({ totalResults, perPage, currentPage }: Props) => {
 
   return (
     <nav className="flex justify-center items-center">
-      <PaginationButton onClick={decreasePageHandler}>
+      <PaginationButton
+        onClick={() => updatePageNumber(currentPage - 1)}
+        disabled={currentPage === 1}
+      >
         <MdKeyboardArrowLeft />
       </PaginationButton>
 
@@ -63,7 +54,7 @@ export const Pagination = ({ totalResults, perPage, currentPage }: Props) => {
           <PaginationButton
             number={1}
             currentPage={currentPage}
-            onClick={() => switchPageHandler(1)}
+            onClick={() => updatePageNumber(1)}
           />
 
           {currentPage >= 5 && <span className="text-grey-dark">...</span>}
@@ -71,7 +62,7 @@ export const Pagination = ({ totalResults, perPage, currentPage }: Props) => {
           {isAtBeginning && generatePaginationButtons(1, 5)}
           {isInMiddle &&
             generatePaginationButtons(currentPage - 3, currentPage + 2)}
-          {isAtEnd && generatePaginationButtons(maxPage - 5, maxPage - 1)}
+          {isAtEnd && generatePaginationButtons(maxPage - 6, maxPage - 1)}
 
           {currentPage < maxPage - 3 && (
             <span className="text-grey-dark">...</span>
@@ -80,12 +71,15 @@ export const Pagination = ({ totalResults, perPage, currentPage }: Props) => {
           <PaginationButton
             number={maxPage}
             currentPage={currentPage}
-            onClick={() => switchPageHandler(maxPage)}
+            onClick={() => updatePageNumber(maxPage)}
           />
         </>
       )}
 
-      <PaginationButton onClick={incrementPageHandler}>
+      <PaginationButton
+        onClick={() => updatePageNumber(currentPage + 1)}
+        disabled={currentPage === maxPage}
+      >
         <MdKeyboardArrowRight />
       </PaginationButton>
     </nav>
